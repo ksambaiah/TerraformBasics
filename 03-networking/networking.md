@@ -112,3 +112,58 @@ etc
  - DHCP - Managing all the above
  - Private address space
 
+## NAT
+
+Nat stands for network address translation, why do we need NAT? Where are all we use NAT device?
+
+ - Network addresses has private and public addresses. 
+ - If we have 10 devices, getting 10 public addresses is costly and not required
+ - Private as name suggest will not be able to communicate with outside its network
+ - NAT solves the problem of private network communicate with public network
+ 
+ ### TCP and UDP communication
+
+  Two network points (or computers or mobile or computer) communicating with each other for http will have the following information
+  ClientIP, ClientPort, Server IP, 80, TCP
+ - ServerPort is 80 due to http, https 443, ssh 22 etc
+ - ClientPort is between 1025-65355 random port.
+
+The above communication look like 10.1.1.123, 2389, 142.250.192.3, 22, tcp
+We know that 10.1.1.123 can't send packets to internet, now comes NAT.
+NAT device has private address and public address, public address let us say 129.10.1.135. 
+
+Before NAT comes into picture
+ 10.1.1.123, 2389, 142.250.192.3, 22, tcp
+NAT device transfers this to
+129.10.1.135, 4334,  142.250.192.3, 22, tcp
+
+ - 129.10.1.135 is public IP so it can be communicated with internet
+ - NAT device maintains table of localip, localport,  remote port like
+ - 10.1.1.123, 2389, 4334
+ - When traffic gets back on port 4334 from server IP, it knows where to send back the results.
+ - NAT is replacing localport to its own port, request from other network devices can also translate.
+ - Example of NAT device is home internet router.
+ - Home internet router have one public address, private address provides to laptops, mobile phones etc via wifi. Router works as NAT device for all these network points.
+ - NAT is translating source IP so it is called SNAT source network address translation.
+### SNAT and DNAT
+
+We encounter mostly SNAT, with SNAT private address space hosts can communicate to internet, you can't run webserver with SNAT (put it differently public networks can't access your webserver running in private network).
+
+## Internet gateway  and NAT device
+
+    
+We covered what is gateway, if network require to communicate outside of broadcasting domain,
+gateway helps to communicate as it has one IP with your network and another IP outside network. It knows how to send traffic outside of broadcasting domain.
+NAT device helps by masking private IP with public IP as network address is translated.
+
+**We create for some subnets gateway (and routing table) and some subnets NAT device in AWS. What is happening with gateway vs NAT?**
+
+### AWS Subnet types
+
+
+Out of four types of subnets we cover in this section
+-   Public subnet  – The subnet has a direct route to an  [internet gateway](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html). Resources in a public subnet can access the public internet.
+    
+-   Private subnet  – The subnet does not have a direct route to an internet gateway. Resources in a private subnet require a  [NAT device](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html)  to access the public internet.
+- Public subnets can have public IP addresses and to communicate outside (and into aws instances) we need to have internet gateway.
+- Private subnets required NAT device to communicate outside.
