@@ -18,3 +18,13 @@ This module covers how to create AWS EC2 instance. We outline steps to create pr
  - *terraform destroy* destroys the resources created in the above step.
  - Terraform state file is created after terraform apply step. We cover state file in the subsequent sections.
 [you can find more details in the link.](https://medium.com/@aliatakan/terraform-create-a-vpc-subnets-and-more-6ef43f0bf4c1)
+
+## Terminology used in this section
+
+ - VPC
+ - Region
+ - Network and subnets
+ - AMI
+ - Internet gateway
+ - Security group
+ - EC2 instances

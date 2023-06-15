@@ -6,3 +6,5 @@ Terraform is a cloud orchestrator tool using declarative language. You describe 
 
 Installation of terraform is a one binary. Mac you install using brew tool and on Linux and Windows is a binary file keeping in the path.
 Terraform requires aws api keys to communicate, there are many ways and very simple way to do it via .aws directory in the home directory. How to keep credentials are outside of the scope of this scope of this page.
+
+
